@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0B0B0F" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AI 画图" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <title>AI 画图</title>
+    <script>
+      // 首帧前定主题，避免亮暗闪烁
+      ;(function () {
+        try {
+          var raw = localStorage.getItem('ai-canvas-settings')
+          var mode = 'auto'
+          if (raw) {
+            var st = JSON.parse(raw)
+            mode = (st && st.state && st.state.theme) || 'auto'
+          }
+          var dark =
+            mode === 'dark' ||
+            (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          var theme = dark ? 'dark' : 'light'
+          document.documentElement.dataset.theme = theme
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute('content', dark ? '#0B0B0F' : '#F7F6F3')
+        } catch (e) {}
+      })()
+    </script>
+    <script type="module" crossorigin src="./assets/index-CPQ2Uywq.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CyNi7hfK.css">
+  <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
