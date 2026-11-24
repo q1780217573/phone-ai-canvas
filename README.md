@@ -97,6 +97,9 @@ PWA 安装（添加到主屏幕）需要 HTTPS，`http://局域网IP` 只能当�
 pnpm 发布
 ```
 
-等价于 `powershell -ExecutionPolicy Bypass -File scripts\发布.ps1`：构建 → 覆盖 `main` 分支 → 推送，约 1 分钟后 Pages 生效。
+等价于 `node scripts/deploy.mjs`：构建 → 覆盖 `main` 分支 → 推送，约 1 分钟后 Pages 生效。
 
-注意：本机 git 走代理（127.0.0.1:7897）且 `sslBackend=openssl`，直接 push 会报证书错误，脚本里已统一用 `-c http.sslBackend=schannel`。
+两个已知坑，脚本里都绕开了：
+
+- 本机 git 走代理（127.0.0.1:7897）且 `sslBackend=openssl`，直接 push 报证书错误，所有 git 调用统一带 `-c http.sslBackend=schannel`
+- Node 22 的 `fs.cpSync` 在含中文的路径下会直接崩溃（0xC0000409），所以拷产物用的是自写递归拷贝
