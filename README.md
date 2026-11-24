@@ -81,4 +81,22 @@ pnpm check          # TypeScript 类型检查
 
 PWA 安装（添加到主屏幕）需要 HTTPS，`http://局域网IP` 只能当普通网页用。
 
-推荐 GitHub Pages：把 `dist/` 推到仓库，开启 Pages 即得一个 HTTPS 地址，手机打开后「添加到主屏幕」。
+线上地址：https://q1780217573.github.io/phone-ai-canvas/
+仓库：https://github.com/q1780217573/phone-ai-canvas （public）
+
+两个分支，各管一件事：
+
+| 分支 | 内容 | 说明 |
+| :--- | :--- | :--- |
+| `source` | 源码（本目录全部，忽略 node_modules / dist） | 改动后 `git add -A && git commit && git push origin source` |
+| `main` | 只有构建产物 + `.nojekyll` | GitHub Pages 从这里发布 |
+
+发布一条命令：
+
+```bash
+pnpm 发布
+```
+
+等价于 `powershell -ExecutionPolicy Bypass -File scripts\发布.ps1`：构建 → 覆盖 `main` 分支 → 推送，约 1 分钟后 Pages 生效。
+
+注意：本机 git 走代理（127.0.0.1:7897）且 `sslBackend=openssl`，直接 push 会报证书错误，脚本里已统一用 `-c http.sslBackend=schannel`。
